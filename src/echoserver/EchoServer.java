@@ -13,7 +13,7 @@ public class EchoServer {
     public static void main(String[] args) {
         try {
             // Start listening on the specified port
-            ServerSocket sock = new ServerSocket(portNumber);
+            ServerSocket serverSocket = new ServerSocket(portNumber);
 
             int c;
             String responseLine;
@@ -21,20 +21,26 @@ public class EchoServer {
             // Run forever, which is common for server style services
             while (true) {
                 // Wait until someone connects, thereby requesting a date
-                Socket client = sock.accept();
-                System.out.println("Someone requested something...");
+                Socket clientSocket = serverSocket.accept();
+                System.out.println("Accepted connection from client.");
 
                 // Construct a writer so we can write to the socket, thereby
                 // sending something back to the client.
-                OutputStream os = client.getOutputStream();
-                DataInputStream is = new DataInputStream(client.getInputStream());
+                OutputStream os = clientSocket.getOutputStream();
+                DataInputStream is = new DataInputStream(clientSocket.getInputStream());
 
-                c = is.read();
-                os.write(c);
-                os.flush();
+                // c = is.read();
+                while ( (c = is.read()) != 0) {
+                    os.write(c);
+                    os.flush();
+                }
 
                 // Close the client socket since we're done.
-                client.close();
+                System.out.println("Closing client connection");
+                os.close();
+                is.close();
+                clientSocket.close();
+
             }
 
             // *Very* minimal error handling.

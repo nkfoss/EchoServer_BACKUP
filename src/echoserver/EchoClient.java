@@ -41,7 +41,9 @@ public class EchoClient {
             os.close();
             is.close();
             echoSocket.close();
-        } catch (Exception e) {
+        }
+
+        catch (Exception e) {
             System.err.println("Exception:  " + e);
         }
     }
