@@ -30,7 +30,7 @@ public class EchoServer {
                 DataInputStream is = new DataInputStream(clientSocket.getInputStream());
 
                 // c = is.read();
-                while ( (c = is.read()) != 0) {
+                while ( (c = is.read()) != -1) {
                     os.write(c);
                     os.flush();
                 }
@@ -50,3 +50,5 @@ public class EchoServer {
         }
     }
 }
+
+// model: https://introcs.cs.princeton.edu/java/84network/EchoServer.java.html

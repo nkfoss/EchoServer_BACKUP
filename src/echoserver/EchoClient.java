@@ -10,14 +10,14 @@ public class EchoClient {
 
     public static void main(String[] args) {
 
-        String server;
+        String server = "127.0.0.1";
 
         // Use "127.0.0.1", i.e., localhost, if no server is specified.
-        if (args.length == 0) {
-            server = "127.0.0.1";
-        } else {
-            server = args[0];
-        }
+//        if (args.length == 0) {
+//            server = "127.0.0.1";
+//        } else {
+//            server = args[0];
+//        }
 
         try {
             Socket echoSocket = new Socket(server, portNumber);
@@ -28,15 +28,13 @@ public class EchoClient {
             int responseByte;
 
             while ( (c = System.in.read()) != -1) {
-                os.write((byte)c);
-                if (c == '\n') {
-                    os.flush();
-                    responseByte = is.read();
-                    System.out.println("echo: " + responseByte);
-                }
+                os.write(c);
+                os.flush();
+                responseByte = is.read();
+                System.out.write(responseByte);
             }
 
-            System.out.println("Time to close.");
+//            System.out.println("Time to close.");
 
             os.close();
             is.close();
@@ -50,3 +48,6 @@ public class EchoClient {
 
 
 }
+
+
+// model: https://introcs.cs.princeton.edu/java/84network/EchoClient.java.html
